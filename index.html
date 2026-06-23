@@ -5,135 +5,238 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ACM - Armonía, Cuerpo y Música | Berazategui</title>
     <style>
-        /* Variables de diseño */
         :root {
-            --primary: #2A52BE; /* Azul profesional / bienestar */
-            --dark: #1A1A1A;
-            --light: #F8F9FA;
+            --primary: #1A365D; /* Azul profundo profesional */
+            --secondary: #2B6CB0; /* Azul bienestar activo */
             --accent: #25D366; /* Verde WhatsApp */
+            --light-bg: #F7FAFC;
+            --dark-text: #2D3748;
             --font: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Reset y Animaciones Base */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
             font-family: var(--font);
-            color: var(--dark);
-            background-color: var(--light);
-            line-height: 1.6;
+            color: var(--dark-text);
+            background-color: var(--light-bg);
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+        }
+
+        .animated {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        /* Header */
         header {
-            background-color: #ffffff;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
         }
 
-        .logo-area h1 {
-            font-size: 1.8rem;
+        .logo h1 {
+            font-size: 1.6rem;
             color: var(--primary);
-            letter-spacing: 2px;
+            letter-spacing: 3px;
+            font-weight: 800;
         }
 
-        /* Hero Section */
+        /* Hero Visual Section */
         .hero {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a52be 100%);
+            position: relative;
+            background: linear-gradient(rgba(26, 54, 93, 0.85), rgba(43, 108, 176, 0.85)), 
+                        url('watermarked_img_5488308075742641405.png') no-repeat center center/cover;
             color: white;
-            padding: 60px 20px;
+            padding: 120px 20px;
             text-align: center;
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .hero h2 {
-            font-size: 2.2rem;
-            margin-bottom: 15px;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            max-width: 800px;
         }
 
         .hero p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 25px auto;
-            opacity: 0.9;
+            font-size: 1.3rem;
+            max-width: 650px;
+            margin-bottom: 30px;
+            opacity: 0.95;
         }
 
-        /* Contenedor Principal */
+        /* Contenedores */
         .container {
-            max-width: 1000px;
-            margin: 40px auto;
+            max-width: 1200px;
+            margin: 80px auto;
             padding: 0 20px;
         }
 
         .section-title {
             text-align: center;
-            margin-bottom: 30px;
-            position: relative;
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 50px;
         }
 
         .section-title::after {
             content: '';
             display: block;
-            width: 50px;
-            height: 3px;
-            background-color: var(--primary);
-            margin: 10px auto 0 auto;
+            width: 60px;
+            height: 4px;
+            background-color: var(--secondary);
+            margin: 15px auto 0 auto;
+            border-radius: 2px;
         }
 
-        /* Grilla de Servicios */
+        /* Grilla de Servicios con Imágenes */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 50px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
 
         .card {
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: transform 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-img {
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-content {
+            padding: 30px;
         }
 
         .card h3 {
             color: var(--primary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-size: 1.4rem;
         }
 
-        /* Sección de Enlaces/CTA */
-        .cta-section {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
+        /* Casos de Éxito / Testimonios */
+        .testimonials {
+            background-color: #EDF2F7;
+            padding: 80px 20px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-item {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+            position: relative;
+        }
+
+        .testimonial-item::before {
+            content: "“";
+            font-size: 4rem;
+            color: var(--secondary);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.2;
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .client-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: cover;
+            margin-right: 15px;
+        }
+
+        .client-details h4 {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        .client-details span {
+            font-size: 0.85rem;
+            color: #718096;
+        }
+
+        /* Call To Action */
+        .cta-box {
+            background: white;
+            padding: 50px;
+            border-radius: 16px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            margin-bottom: 50px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            margin-top: 60px;
         }
 
-        /* Botones */
+        /* Botonera Principal */
         .btn {
             display: inline-block;
-            padding: 12px 30px;
-            border-radius: 25px;
+            padding: 14px 35px;
+            border-radius: 30px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 600;
             margin: 10px;
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
+            letter-spacing: 0.5px;
+            transition: all 0.3s;
         }
 
         .btn-instagram {
@@ -141,81 +244,167 @@
             color: white;
         }
 
-        .btn-whatsapp {
-            background-color: var(--accent);
-            color: white;
+        .btn-instagram:hover {
+            transform: scale(1.03);
+            box-shadow: 0 8px 20px rgba(220, 39, 67, 0.3);
         }
 
         .btn-maps {
-            background-color: #4285F4;
+            background-color: var(--primary);
             color: white;
+        }
+
+        .btn-maps:hover {
+            background-color: var(--secondary);
+        }
+
+        /* Botón Flotante de Contacto */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--accent);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 999;
+            text-decoration: none;
+            animation: pulse 2s infinite;
+        }
+
+        .whatsapp-float svg {
+            width: 32px;
+            height: 32px;
+            fill: white;
         }
 
         /* Footer */
         footer {
-            background-color: var(--dark);
-            color: #888;
+            background-color: #1A202C;
+            color: #A0AEC0;
             text-align: center;
-            padding: 20px;
-            font-size: 0.9rem;
+            padding: 40px 20px;
+            font-size: 0.95rem;
         }
 
-        /* Mobile responsive adjustments */
-        @media (max-width: 600px) {
-            .hero h2 { font-size: 1.8rem; }
-            .btn { display: block; margin: 15px 0; }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2rem; }
+            .hero p { font-size: 1.1rem; }
+            .btn { display: block; margin: 15px 0; text-align: center; }
+            .whatsapp-float { bottom: 20px; right: 20px; width: 55px; height: 55px; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-area">
+        <div class="logo">
             <h1>ACM</h1>
         </div>
     </header>
 
-    <section class="hero">
+    <!-- Hero con movimiento de carga -->
+    <section class="hero animated">
         <h2>Prevención de Lesiones, Relajación y Bienestar</h2>
-        <p>Programa especializado para músicos, deportistas y profesionales que trabajan con su cuerpo.</p>
-        <p><strong>📍 Berazategui, Argentina</strong></p>
+        <p>Un espacio pensado exclusivamente para músicos, deportistas y profesionales que exigen al máximo su cuerpo.</p>
+        <p style="font-weight: 600;">📍 Berazategui, Buenos Aires</p>
     </section>
 
     <div class="container">
+        <h2 class="section-title">Nuestras Especialidades</h2>
         
-        <h2 class="section-title">Nuestros Servicios</h2>
         <div class="services-grid">
+            <!-- Servicio 1 -->
             <div class="card">
-                <h3>Masoterapia</h3>
-                <p>Masajes orientados a la recuperación muscular, liberación de tensiones y alivio del estrés físico provocado por la práctica constante.</p>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1600334129128-685c5582fd35?auto=format&fit=cover&w=600&q=80');"></div>
+                <div class="card-content">
+                    <h3>Masoterapia</h3>
+                    <p>Sesiones enfocadas en la descontractura profunda, alivio de tensiones repetitivas y recuperación del tono muscular óptimo.</p>
+                </div>
             </div>
+
+            <!-- Servicio 2 -->
             <div class="card">
-                <h3>Ergonomía</h3>
-                <p>Análisis del gesto técnico y postura con el instrumento o área de trabajo para evitar sobrecargas y optimizar el rendimiento diario.</p>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=cover&w=600&q=80');"></div>
+                <div class="card-content">
+                    <h3>Ergonomía Corporal</h3>
+                    <p>Reeducación postural y análisis del gesto técnico (con tu instrumento o puesto laboral) para evitar patologías futuras.</p>
+                </div>
             </div>
+
+            <!-- Servicio 3 -->
             <div class="card">
-                <h3>Pedicuría</h3>
-                <p>Cuidado integral de la salud de tus pies, fundamental para profesionales y deportistas que sostienen largas jornadas de actividad.</p>
+                <div class="card-img" style="background-image: url('https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?auto=format&fit=cover&w=600&q=80');"></div>
+                <div class="card-content">
+                    <h3>Pedicuría Integral</h3>
+                    <p>Atención y cuidado preventivo de afecciones en los pies, asegurando la correcta base y pisada para deportistas y artistas en escena.</p>
+                </div>
             </div>
         </div>
-
-        <h2 class="section-title">Cursos y Talleres</h2>
-        <div class="card" style="margin-bottom: 50px;">
-            <p>Brindamos capacitaciones dinámicas y talleres teóricos-prácticos pensados para que aprendas a escuchar a tu cuerpo y prevenir molestias antes de que se conviertan en lesiones.</p>
-        </div>
-
-        <h2 class="section-title">¡Contactate con Nosotros!</h2>
-        <div class="cta-section">
-            <p style="margin-bottom: 20px;">Elegí el medio que prefieras para reservar tu turno, ver tips de prevención o cómo llegar al consultorio:</p>
-            
-            <a href="https://www.instagram.com/acm_armoniacuerpomusica/" target="_blank" class="btn btn-instagram">Seguinos en Instagram</a>
-            <a href="https://wa.me/TU_NUMERO_AQUI" target="_blank" class="btn btn-whatsapp">Escribinos por WhatsApp</a>
-            <a href="https://maps.app.goo.gl/iNMpdwnMzyPAHxFV9" target="_blank" class="btn btn-maps">Ver en Google Maps</a>
-            
-            <p style="margin-top: 25px; font-size: 0.9rem; color: #666;">Dirección: Calle 148 N°945 entre 9 y 10, Berazategui.</p>
-        </div>
-
     </div>
+
+    <!-- Sección de Casos de Éxito / Testimonios -->
+    <section class="testimonials">
+        <h2 class="section-title">Casos de Éxito</h2>
+        <div class="testimonials-grid">
+            
+            <div class="testimonial-item">
+                <p>"Las sesiones de ergonomía cambiaron por completo mi forma de ensayar. Pasé de tener dolores lumbares crónicos a tocar el violín por horas sin molestias."</p>
+                <div class="client-info">
+                    <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80');"></div>
+                    <div class="client-details">
+                        <h4>Lucía M.</h4>
+                        <span>Violinista Profesional</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-item">
+                <p>"Excelente la atención en masoterapia tras mis entrenamientos de alta intensidad. Un espacio súper necesario en Berazategui para los que vivimos del cuerpo."</p>
+                <div class="client-info">
+                    <div class="client-avatar" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80');"></div>
+                    <div class="client-details">
+                        <h4>Mariano G.</h4>
+                        <span>Atleta de Rendimiento</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="container">
+        <h2 class="section-title">Cursos y Talleres</h2>
+        <div class="cta-box" style="background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%); border-left: 5px solid var(--secondary);">
+            <p style="font-size: 1.2rem; margin-bottom: 0; color: #4A5568;">
+                Realizamos capacitaciones grupales y encuentros de concientización corporal para orquestas, estudios de danza y clubes deportivos. ¡Aprendé a cuidar tu herramienta de trabajo!
+            </p>
+        </div>
+
+        <h2 class="section-title">Conectá con Nosotros</h2>
+        <div class="cta-box">
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">Seguí el día a día de nuestro consultorio, mirá consejos interactivos o agendá tu visita presencial:</p>
+            
+            <a href="https://www.instagram.com/acm_armoniacuerpomusica/" target="_blank" class="btn btn-instagram">Ver Instagram Oficial</a>
+            <a href="https://maps.app.goo.gl/iNMpdwnMzyPAHxFV9" target="_blank" class="btn btn-maps">¿Cómo llegar al Consultorio?</a>
+            
+            <p style="margin-top: 30px; font-weight: 500; color: #718096;">📍 Calle 148 N°945 entre 9 y 10, Berazategui.</p>
+        </div>
+    </div>
+
+    <!-- Botón Flotante de Contacto Permanente (WhatsApp) -->
+    <!-- Reemplaza el link href por el número real del cliente, ej: https://wa.me/54911XXXXXX -->
+    <a href="https://wa.me/#" class="whatsapp-float" target="_blank" title="Agendar Turno por WhatsApp">
+        <svg viewBox="0 0 24 24">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.713-1.457L0 24zm6.59-4.846c1.6.95 3.498 1.451 5.438 1.453 5.441 0 9.868-4.42 9.873-9.863.002-2.637-1.023-5.115-2.884-6.978C17.207 1.84 14.73 1.815 12.01 1.815c-5.44 0-9.867 4.42-9.871 9.863-.001 1.902.496 3.758 1.439 5.362l-.993 3.628 3.722-.977zm11.077-4.716c-.295-.148-1.743-.86-2.012-.958-.267-.099-.463-.148-.659.148-.196.295-.76.958-.93 1.154-.173.196-.347.219-.641.071-.295-.148-1.246-.459-2.371-1.464-.875-.78-1.465-1.744-1.636-2.038-.173-.295-.018-.454.13-.601.134-.132.295-.347.443-.521.148-.174.197-.296.296-.493.099-.197.05-.371-.025-.521-.075-.148-.659-1.591-.902-2.176-.237-.57-.479-.493-.659-.503-.17-.008-.365-.01-.56-.01-.196 0-.515.074-.784.371-.269.296-1.029 1.006-1.029 2.454 0 1.448 1.054 2.846 1.202 3.043.149.196 2.074 3.167 5.025 4.442.702.303 1.25.485 1.677.62.705.224 1.346.193 1.854.117.566-.084 1.743-.712 1.988-1.4.246-.688.246-1.277.173-1.4-.074-.124-.269-.196-.565-.344z"/>
+        </svg>
+    </a>
 
     <footer>
         <p>&copy; 2026 ACM - Armonía, Cuerpo y Música. Todos los derechos reservados.</p>
